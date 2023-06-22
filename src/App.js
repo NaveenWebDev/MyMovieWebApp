@@ -1,8 +1,18 @@
 import "./App.css";
+import AddMovie from "./components/AddMovie";
+import Cards from "./components/Cards";
+import Header from "./components/Header";
+import { Route , Routes } from "react-router-dom";
 
 function App() {
   return (
-   <h1 className="mt-5 bg-orange-800">hello world</h1>
+    <div className="App">
+      <Header></Header>
+        <Routes>
+          <Route path="/" element={<Cards></Cards>} />
+          <Route path="/addmovie" element={<AddMovie></AddMovie>} />
+        </Routes>
+    </div>
   );
 }
 
