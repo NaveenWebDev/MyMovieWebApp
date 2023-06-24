@@ -3,28 +3,8 @@ import ReactStars from "react-stars";
 import { TailSpin } from "react-loader-spinner";
 import { getDocs } from "firebase/firestore";
 import { moviesRef } from "./firebase/firebase";
-
+import { Link } from "react-router-dom";
 const Cards = () => {
-  // const [MovieData, setMovieData] = useState([
-  //   {
-  //     name: "avengers endgame",
-  //     year: "2018",
-  //     rating: 5,
-  //     img: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c618cd88432989.5dd5e72e505d1.jpg",
-  //   },
-  //   {
-  //     name: "avengers endgame",
-  //     year: "2018",
-  //     rating: 3.5,
-  //     img: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c618cd88432989.5dd5e72e505d1.jpg",
-  //   },
-  //   {
-  //     name: "avengers endgame",
-  //     year: "2018",
-  //     rating: 4,
-  //     img: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c618cd88432989.5dd5e72e505d1.jpg",
-  //   },
-  // ]);
 
   const [MovieData, setMovieData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,8 +12,8 @@ const Cards = () => {
   useEffect(()=>{
     async function getData(){
       setLoading(true);
-      const daata = await getDocs(moviesRef);
-      daata.forEach((doc)=>{
+      const data = await getDocs(moviesRef);
+      data.forEach((doc)=>{
         setMovieData((pre)=> [...pre, {...(doc.data()), id:doc.id}]);
       })
       setLoading(false);
@@ -42,12 +22,13 @@ const Cards = () => {
   },[])
 
   return (
+    
     <div className="flex flex-wrap justify-center gap-5 px-5 mt-2">
       {
         loading ? <TailSpin color="blue" /> : 
         MovieData.map((ele, ind) => {
         return (
-          <div className="card w-60 hover:-translate-y-1 transition-all duration-500 p-2 bg-slate-800" key={ind}>
+          <Link to={`/detail/${ele.id}`}> <div className="card w-60 hover:-translate-y-1 transition-all duration-500 p-2 bg-slate-800" key={ind}>
             <img
               src={ele.image}
               alt="poster"
@@ -62,14 +43,11 @@ const Cards = () => {
             <h2>
               <span className=" text-blue-500">Date</span> : {ele.year}
             </h2>
-            {/* <h2>
-              <span className=" text-blue-500">Desc</span> : {ele.description}
-            </h2> */}
-          </div>
+          </div> </Link>
         );
       })
       }
-    </div>
+    </div> 
   );
 };
 
