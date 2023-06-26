@@ -3,6 +3,7 @@ import ReactStars from 'react-stars'
 import { useParams } from 'react-router-dom'
 import { db } from './firebase/firebase'
 import { doc, getDoc } from 'firebase/firestore'
+import Reviews from './Reviews'
 
 const Detail = () => {
     const {id} = useParams();
@@ -24,13 +25,16 @@ const Detail = () => {
 
   return (
     <div className='p-4 flex justifly-center w-[70%] m-auto'>
-        <img className='h-96' src={data.image} alt="poster" />
+        <img className='h-96 w-[30%] object-cover object-center' src={data.image} alt="poster"  />
 
-        <div className='ml-4 flex justify-center flex-col'>
+        <div className='ml-4 flex justify-center flex-col w-[70%]'>
             <h2 className='text-slate-400 font-bold text-4xl'>{data.name} <span>{data.year}</span> </h2>
             <ReactStars size={20} half={true} value={4.5} edit={false}/>
             <p>{data.description}</p>
+
+            <Reviews></Reviews>
         </div>
+
 
     </div>
   )
